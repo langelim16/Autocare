@@ -1,0 +1,1 @@
+Padrão: 1) Página src/app/(dashboard)/[nome]/page.tsx. 2) Componentes src/components/[nome]/NomeComponente.tsx. 3) Serviço src/core/services/[nome].service.ts. 4) Integração src/integrations/[nome]/. 5) Adicionar na Sidebar e MobileNav. 6) Textos PT-BR, R$, DD/MM/AAAA.

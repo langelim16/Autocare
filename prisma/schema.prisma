@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  nome      String?
+  avatarUrl String?
+  createdAt DateTime  @default(now())
+  veiculos  Veiculo[]
+}
+
+model Veiculo {
+  id              String        @id @default(cuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tipo            String
+  placa           String
+  renavam         String?
+  marca           String
+  modelo          String
+  anoFabricacao   Int
+  anoModelo       Int
+  cor             String
+  hodometroAtual  Float         @default(0)
+  horimetroAtual  Float?
+  fotoUrl         String?
+  hashPassaporte  String        @unique @default(cuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  telemetria      RegistroTelemetria[]
+  manutencoes     Manutencao[]
+  esteticas       RegistroEstetico[]
+  consultasDetran ConsultaDetran[]
+  @@index([userId])
+  @@index([placa])
+}
+
+model RegistroTelemetria {
+  id           String   @id @default(cuid())
+  veiculoId    String
+  veiculo      Veiculo  @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
+  km           Float
+  horasMotor   Float?
+  dataServico  DateTime
+  dataCadastro DateTime @default(now())
+  origem       String
+  notas        String?
+  createdAt    DateTime @default(now())
+  @@index([veiculoId, dataServico])
+}
+
+model Manutencao {
+  id              String          @id @default(cuid())
+  veiculoId       String
+  veiculo         Veiculo         @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
+  tipo            String
+  descricao       String
+  itens           String?
+  oficina         String?
+  cnpjOficina     String?
+  custo           Float
+  kmNoMomento     Float
+  horasNoMomento  Float?
+  dataServico     DateTime
+  dataCadastro    DateTime        @default(now())
+  comprovanteUrl  String?
+  hashImagem      String?
+  chaveNfeSefaz   String?
+  xmlSefazCache   String?
+  seloIntegridade String          @default("BRONZE_DECLARADO")
+  status          String          @default("CONCLUIDO")
+  motivoRejeicao  String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  @@index([veiculoId, dataServico])
+}
+
+model PlanoManutencao {
+  id             String        @id @default(cuid())
+  nome           String
+  tipoVeiculo    String?
+  intervaloKm    Float?
+  intervaloHoras Float?
+  intervaloDias  Int?
+  descricao      String?
+}
+
+model RegistroEstetico {
+  id              String          @id @default(cuid())
+  veiculoId       String
+  veiculo         Veiculo         @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
+  tipo            String
+  descricao       String?
+  custo           Float?
+  oficina         String?
+  dataServico     DateTime
+  dataCadastro    DateTime        @default(now())
+  comprovanteUrl  String?
+  seloIntegridade String          @default("BRONZE_DECLARADO")
+  validadeMeses   Int?
+  dataValidade    DateTime?
+  @@index([veiculoId, dataServico])
+}
+
+model ConsultaDetran {
+  id           String   @id @default(cuid())
+  veiculoId    String
+  veiculo      Veiculo  @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
+  consultadoEm DateTime @default(now())
+  multasJson   String?
+  ipvaStatus   String?
+  licenciamento String?
+  totalDebitos Float    @default(0)
+  provider     String
+}
