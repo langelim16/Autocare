@@ -22,6 +22,10 @@ Next.js 15 (App Router), TypeScript, Tailwind CSS, Shadcn/UI, Prisma, Supabase (
 - Ícones: Lucide React. Nenhuma outra lib de ícones.
 - Regra de ouro: npm run build sem erros antes de concluir qualquer tarefa.
 
+## Git — push automático
+Repositório: https://github.com/langelim16/Autocare.git (branch main).
+Sempre que autocare.html (ou qualquer outro arquivo do projeto) for criado/alterado numa sessão, faça commit e push para origin/main ao final da tarefa, sem precisar que o usuário peça. Não pedir confirmação para esse push de rotina — só pausar se houver conflito, force-push, ou risco de perda de histórico.
+
 ## Skills (ler antes de tarefas complexas)
 - .claude/skills/autocare-design-system/ — cores, tipografia, componentes visuais
 - .claude/skills/integrity-engine/ — selos, antifraude, monotonia de Km
