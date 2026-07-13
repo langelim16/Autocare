@@ -3,6 +3,18 @@ import { getDemoOrRealUser } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { consultarDetran } from "@/integrations/detran/detran-mock.provider";
 
+export async function GET(req: Request) {
+  const user = await getDemoOrRealUser();
+  const veiculoId = new URL(req.url).searchParams.get("veiculoId");
+  if (!veiculoId) return NextResponse.json({ erro: "Informe o veículo." }, { status: 400 });
+
+  const consulta = await prisma.consultaDetran.findFirst({
+    where: { veiculoId, veiculo: { user: { email: user.email } } },
+    orderBy: { consultadoEm: "desc" },
+  });
+  return NextResponse.json(consulta);
+}
+
 export async function POST(req: Request) {
   const user = await getDemoOrRealUser();
 

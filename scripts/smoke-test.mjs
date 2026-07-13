@@ -36,7 +36,7 @@ async function main() {
       kmNoMomento: 85200,
       dataServico: new Date("2026-07-05"),
       chaveNfeSefaz: "35260700000000000000550010000012341234567890",
-      seloIntegridade: "OURO_VERIFICADO",
+      seloIntegridade: "OURO_SEFAZ",
     },
   });
 
@@ -48,7 +48,7 @@ async function main() {
       custo: 2400,
       oficina: "Detail Premium",
       dataServico: new Date("2026-03-12"),
-      seloIntegridade: "OURO_VERIFICADO",
+      seloIntegridade: "OURO_SEFAZ",
       validadeMeses: 24,
       dataValidade: new Date("2028-03-12"),
     },
